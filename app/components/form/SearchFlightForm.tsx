@@ -12,6 +12,7 @@ import { cn } from '~/lib/utils'
 import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover'
 import { Select, type Option } from '../input/Select'
 import { toast } from 'sonner'
+import { useNavigate } from 'react-router'
 
 const mockOptions: Option<string>[] = [
   { label: 'Jakarta', value: 'JKT' },
@@ -33,6 +34,8 @@ export function SearchFlightForm() {
   const [date, setDate] = useState<Date>()
   const [isCalendarOpen, setIsCalendarOpen] = useState(false)
 
+  const navigate = useNavigate()
+
   function validateForm() {
     if (!origin) {
       showErrorToast('Asal tidak boleh kosong')
@@ -50,12 +53,18 @@ export function SearchFlightForm() {
       showErrorToast('Asal dan tujuan tidak boleh sama')
       return false
     }
+
+    return true
   }
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
 
-    validateForm()
+    if (!validateForm()) {
+      return
+    }
+
+    navigate('/flights')
   }
 
   return (
