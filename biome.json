@@ -1,0 +1,85 @@
+{
+  "$schema": "https://biomejs.dev/schemas/1.9.4/schema.json",
+  "vcs": { "enabled": true, "clientKind": "git", "useIgnoreFile": true },
+  "files": { "ignoreUnknown": true },
+  "organizeImports": { "enabled": false },
+  "formatter": {
+    "indentStyle": "space",
+    "enabled": true,
+    "formatWithErrors": false,
+    "indentWidth": 2
+  },
+  "linter": {
+    "enabled": true,
+    "rules": {
+      "recommended": true,
+      "a11y": {
+        "noAriaUnsupportedElements": "warn",
+        "noBlankTarget": "off",
+        "useAltText": "warn",
+        "useAriaPropsForRole": "warn",
+        "useValidAriaProps": "warn",
+        "useValidAriaValues": "warn",
+        "useKeyWithClickEvents": "off",
+        "useButtonType": "info"
+      },
+      "complexity": {
+        "noForEach": "warn",
+        "noBannedTypes": "warn",
+        "noVoid": "warn",
+        "useLiteralKeys": "warn"
+      },
+      "correctness": {
+        "noChildrenProp": "error",
+        "useExhaustiveDependencies": "warn",
+        "useHookAtTopLevel": "error",
+        "noUnusedImports": {
+          "level": "warn",
+          "fix": "none"
+        },
+        "useValidForDirection": "error",
+        "useArrayLiterals": "warn",
+        "noConstAssign": "error"
+      },
+      "nursery": {
+        "noImgElement": "warn",
+        "noIrregularWhitespace": "error"
+      },
+      "style": {
+        "useBlockStatements": "warn",
+        "useDefaultSwitchClause": "warn",
+        "useImportType": "off",
+        "useSelfClosingElements": {
+          "level": "error",
+          "fix": "safe"
+        },
+        "useConst": "warn",
+        "noNonNullAssertion": "warn",
+        "useNodejsImportProtocol": "off",
+        "useConsistentArrayType": "info",
+        "useThrowNewError": "warn"
+      },
+      "security": {
+        "noDangerouslySetInnerHtml": "warn",
+        "noDangerouslySetInnerHtmlWithChildren": "warn"
+      },
+      "suspicious": {
+        "noCommentText": "error",
+        "noDuplicateJsxProps": "error",
+        "noConsole": "warn",
+        "noDoubleEquals": "warn",
+        "useAwait": "info",
+        "useDefaultSwitchClauseLast": "warn",
+        "noDuplicateObjectKeys": "error",
+        "noExplicitAny": "warn",
+        "noArrayIndexKey": "warn"
+      }
+    }
+  },
+  "javascript": {
+    "formatter": {
+      "semicolons": "asNeeded",
+      "quoteStyle": "single"
+    }
+  }
+}
