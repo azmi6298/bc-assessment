@@ -1,10 +1,19 @@
 import { SearchFlightForm } from '~/components/form/SearchFlightForm'
+import { getAirportList } from '~/api/gateway/airports/AirportsApi'
+import type { Route } from './+types/home'
 
 export function meta() {
   return [{ title: 'Pesan Tiket' }]
 }
 
-export default function Home() {
+export async function loader() {
+  const airports = await getAirportList()
+  return airports
+}
+
+export default function Home({ loaderData }: Route.ComponentProps) {
+  const airports = loaderData
+
   return (
     <>
       <header className="mb-12 text-center">
@@ -15,7 +24,7 @@ export default function Home() {
       </header>
 
       <div className="max-w-3xl mx-auto">
-        <SearchFlightForm />
+        <SearchFlightForm airports={airports} />
       </div>
     </>
   )

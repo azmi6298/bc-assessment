@@ -8,27 +8,16 @@ import { Button } from '~/components/ui/button'
 import { Label } from '~/components/ui/label'
 import { format } from 'date-fns'
 import { CalendarIcon } from 'lucide-react'
-import { cn } from '~/lib/utils'
+import { cn, showErrorToast } from '~/lib/utils'
 import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover'
 import { Select, type Option } from '../input/Select'
-import { toast } from 'sonner'
 import { useNavigate } from 'react-router'
 
-const mockOptions: Option<string>[] = [
-  { label: 'Jakarta', value: 'JKT' },
-  { label: 'Bandung', value: 'BDG' },
-  { label: 'Semarang', value: 'SMG' },
-  { label: 'Surabaya', value: 'SBY' },
-]
-
-function showErrorToast(message: string) {
-  toast.error('Silakan cek kembali', {
-    description: message,
-    position: 'top-center',
-  })
+interface SearchFlightFormProps {
+  airports: Option<string>[]
 }
 
-export function SearchFlightForm() {
+export function SearchFlightForm(props: SearchFlightFormProps) {
   const [origin, setOrigin] = useState<Option<string>>()
   const [destination, setDestination] = useState<Option<string>>()
   const [date, setDate] = useState<Date>()
@@ -64,7 +53,13 @@ export function SearchFlightForm() {
       return
     }
 
-    navigate('/flights')
+    const queryParamArray = [
+      `origin=${origin?.value}`,
+      `destination=${destination?.value}`,
+      `date=${date?.toISOString()}`,
+    ]
+
+    navigate(`/flights?${queryParamArray.join('&')}`)
   }
 
   return (
@@ -76,7 +71,7 @@ export function SearchFlightForm() {
             <Select
               id="origin"
               value={origin}
-              options={mockOptions}
+              options={props.airports}
               onChange={(value) => setOrigin(value)}
               placeholder="Pilih asal"
             />
@@ -89,7 +84,7 @@ export function SearchFlightForm() {
             <Select
               id="destination"
               value={destination}
-              options={mockOptions}
+              options={props.airports}
               onChange={(value) => setDestination(value)}
               placeholder="Pilih tujuan"
             />
