@@ -1,6 +1,3 @@
-import type { DateTimezoneSetter } from 'node_modules/date-fns/parse/_lib/Setter'
-import type { DateRange } from 'react-day-picker'
-
 export interface FlightData {
   id: string
   airlineCode: string
@@ -19,7 +16,7 @@ interface Price {
   currency: string
 }
 
-interface SeatMap {
+export interface SeatMap {
   rowNumber: number
   seats: {
     slotCode: 'BLANK' | 'AISLE' | 'SEAT'
@@ -29,4 +26,12 @@ interface SeatMap {
     taxes: Price[]
     totalPrices: Price[]
   }[]
+}
+
+export interface PassengerInfo {
+  firstName: string
+  lastName: string
+  email: string
+  dob: Date
+  gender: string
 }

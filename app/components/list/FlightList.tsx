@@ -1,3 +1,5 @@
+import { format } from 'date-fns'
+import { Link, useNavigate } from 'react-router'
 import type { FlightData } from '~/api/domain/FlightData'
 import { format24HoursTime } from '~/lib/utils'
 
@@ -6,6 +8,22 @@ interface FlightListProps {
 }
 
 export default function FlightList({ list }: FlightListProps) {
+  const navigate = useNavigate()
+
+  function handleSelectFlight(flight: FlightData) {
+    const formattedDate = flight.departureTime
+      ? format(flight.departureTime, 'yyyy-MM-dd')
+      : ''
+
+    const queryParamArray = [
+      `origin=${flight.origin}`,
+      `destination=${flight.destination}`,
+      `date=${formattedDate}`,
+    ]
+
+    navigate(`/select-seat?${queryParamArray.join('&')}`)
+  }
+
   return (
     <div className="grid gap-y-8">
       {!list.length && (
@@ -28,8 +46,9 @@ export default function FlightList({ list }: FlightListProps) {
 
       {list.map((flight) => (
         <div
+          onClick={() => handleSelectFlight(flight)}
           key={flight.id}
-          className="flex flex-col gap-y-4 md:flex-row items-center justify-between p-4 border hover:border-orange-500 rounded-lg shadow-md hover:shadow-xl cursor-pointer"
+          className="flex flex-col gap-y-4 md:flex-row items-center justify-between p-4 bg-slate-100 border hover:border-orange-500 rounded-lg shadow-md hover:shadow-xl cursor-pointer"
         >
           <div className="flex md:flex-col gap-2 items-center">
             <h2 className="text-gray-500">Maskapai</h2>

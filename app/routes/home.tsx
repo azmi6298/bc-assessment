@@ -20,9 +20,7 @@ export default function Home({ loaderData }: Route.ComponentProps) {
         <span className="font-semibold text-2xl">Cari Tiket Pilihanmu</span>
       </div>
 
-      {/* <div className="max-w-3xl mx-auto"> */}
       <SearchFlightForm airports={airports} />
-      {/* </div> */}
     </div>
   )
 }

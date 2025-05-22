@@ -1,4 +1,4 @@
-import { getFlightList } from '~/api/gateway/airports/AirportsApi'
+import { getFlightList } from '~/api/gateway/flights/FlightsApi'
 import type { Route } from './+types/flights'
 import FlightList from '~/components/list/FlightList'
 
@@ -18,7 +18,7 @@ export async function loader({ request }: Route.LoaderArgs) {
   return { flightList }
 }
 
-export default function Flights({ loaderData }: Route.ComponentProps) {
+export default function FlightsPage({ loaderData }: Route.ComponentProps) {
   const { flightList } = loaderData
 
   return <FlightList list={flightList} />

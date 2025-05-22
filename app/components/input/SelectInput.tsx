@@ -1,0 +1,80 @@
+import { useState } from 'react'
+import { Label } from '../ui/label'
+import type { Option } from './Select'
+import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover'
+import { Button } from '../ui/button'
+import {
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList,
+} from '../ui/command'
+import { Check } from 'lucide-react'
+import { cn } from '~/lib/utils'
+
+interface SelectProps<T> {
+  id: string
+  label: string
+  options: Option<T>[]
+  value: Option<T> | undefined
+  onChange: (value: Option<T>) => void
+  placeholder?: string
+}
+
+export default function SelectInput<T>(props: SelectProps<T>) {
+  const [open, setOpen] = useState(false)
+  const [value, setValue] = useState<T>()
+
+  return (
+    <div className="space-y-4">
+      <Label htmlFor={props.id}>{props.label}</Label>
+      <div className="relative">
+        <Popover open={open} onOpenChange={setOpen}>
+          <PopoverTrigger asChild>
+            <Button
+              id={props.id}
+              variant="outline"
+              aria-expanded={open}
+              className="w-full justify-between"
+            >
+              {value
+                ? props.options.find((option) => option.value === value)?.label
+                : props.placeholder || 'Select data...'}
+            </Button>
+          </PopoverTrigger>
+          <PopoverContent className="w-(--radix-popover-trigger-width) p-0">
+            <Command>
+              <CommandInput placeholder="Cari data..." />
+              <CommandList>
+                <CommandEmpty>No data found</CommandEmpty>
+                <CommandGroup>
+                  {props.options.map((option) => (
+                    <CommandItem
+                      key={String(option.value)}
+                      value={String(option.value)}
+                      onSelect={() => {
+                        setValue(option.value)
+                        setOpen(false)
+                        props.onChange(option)
+                      }}
+                    >
+                      <Check
+                        className={cn(
+                          'mr-2 h-4 w-4',
+                          value === option.value ? 'opacity-100' : 'opacity-0',
+                        )}
+                      />
+                      {option.label}
+                    </CommandItem>
+                  ))}
+                </CommandGroup>
+              </CommandList>
+            </Command>
+          </PopoverContent>
+        </Popover>
+      </div>
+    </div>
+  )
+}

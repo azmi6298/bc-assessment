@@ -3,15 +3,15 @@
 import type React from 'react'
 
 import { useState } from 'react'
-import { Calendar } from '~/components/ui/calendar'
 import { Button } from '~/components/ui/button'
 import { Label } from '~/components/ui/label'
 import { format } from 'date-fns'
-import { CalendarIcon } from 'lucide-react'
-import { cn, showErrorToast } from '~/lib/utils'
-import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover'
+import { showErrorToast } from '~/lib/utils'
 import { Select, type Option } from '../input/Select'
 import { useNavigate } from 'react-router'
+import DatePickerInput from '../input/DatePickerInput'
+import BaseButton from '../common/BaseButton'
+import SelectInput from '../input/SelectInput'
 
 interface SearchFlightFormProps {
   airports: Option<string>[]
@@ -21,7 +21,6 @@ export function SearchFlightForm(props: SearchFlightFormProps) {
   const [origin, setOrigin] = useState<Option<string>>()
   const [destination, setDestination] = useState<Option<string>>()
   const [date, setDate] = useState<Date>()
-  const [isCalendarOpen, setIsCalendarOpen] = useState(false)
 
   const navigate = useNavigate()
 
@@ -67,67 +66,37 @@ export function SearchFlightForm(props: SearchFlightFormProps) {
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div className="space-y-2">
-          <Label htmlFor="origin">Dari</Label>
-          <div className="relative">
-            <Select
-              id="origin"
-              value={origin}
-              options={props.airports}
-              onChange={(value) => setOrigin(value)}
-              placeholder="Pilih asal"
-            />
-          </div>
-        </div>
+        <SelectInput
+          id="origin"
+          label="Dari"
+          value={origin}
+          options={props.airports}
+          onChange={(value) => setOrigin(value)}
+          placeholder="Pilih asal"
+        />
 
-        <div className="space-y-2">
-          <Label htmlFor="destination">Tujuan</Label>
-          <div className="relative">
-            <Select
-              id="destination"
-              value={destination}
-              options={props.airports}
-              onChange={(value) => setDestination(value)}
-              placeholder="Pilih tujuan"
-            />
-          </div>
-        </div>
+        <SelectInput
+          id="destination"
+          label="Ke"
+          value={destination}
+          options={props.airports}
+          onChange={(value) => setDestination(value)}
+          placeholder="Pilih tujuan"
+        />
       </div>
 
-      <div className="space-y-2">
-        <Label htmlFor="date">Tanggal Berangkat</Label>
-        <Popover open={isCalendarOpen} onOpenChange={setIsCalendarOpen}>
-          <PopoverTrigger asChild>
-            <Button
-              id="date"
-              variant="outline"
-              className={cn(
-                'w-full justify-start text-left font-normal',
-                !date && 'text-muted-foreground',
-              )}
-            >
-              <CalendarIcon className="mr-2 h-4 w-4" />
-              {date ? format(date, 'dd MMMM yyyy') : <span>Pilih tanggal</span>}
-            </Button>
-          </PopoverTrigger>
-          <PopoverContent className="w-auto p-0">
-            <Calendar
-              mode="single"
-              selected={date}
-              onSelect={(date) => {
-                setDate(date)
-                setIsCalendarOpen(false)
-              }}
-              initialFocus
-              disabled={(date) => date < new Date()}
-            />
-          </PopoverContent>
-        </Popover>
-      </div>
+      <DatePickerInput
+        id="departure"
+        label="Tanggal Berangkat"
+        value={date}
+        onChange={(date) => {
+          setDate(date)
+        }}
+      />
 
-      <Button type="submit" className="w-full bg-blue-900">
+      <BaseButton type="submit" className="w-full bg-blue-900">
         Cari Penerbangan
-      </Button>
+      </BaseButton>
     </form>
   )
 }
