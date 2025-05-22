@@ -53,10 +53,12 @@ export function SearchFlightForm(props: SearchFlightFormProps) {
       return
     }
 
+    const formattedDate = date ? format(date, 'yyyy-MM-dd') : ''
+
     const queryParamArray = [
       `origin=${origin?.value}`,
       `destination=${destination?.value}`,
-      `date=${date?.toISOString()}`,
+      `date=${formattedDate}`,
     ]
 
     navigate(`/flights?${queryParamArray.join('&')}`)

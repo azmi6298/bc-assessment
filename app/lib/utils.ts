@@ -12,3 +12,11 @@ export function showErrorToast(message: string) {
     position: 'top-center',
   })
 }
+
+export function format24HoursTime(date: Date) {
+  return date.toLocaleTimeString([], {
+    hour: '2-digit',
+    minute: '2-digit',
+    hour12: false,
+  })
+}

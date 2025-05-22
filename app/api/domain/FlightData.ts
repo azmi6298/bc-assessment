@@ -1,10 +1,13 @@
+import type { DateTimezoneSetter } from 'node_modules/date-fns/parse/_lib/Setter'
+import type { DateRange } from 'react-day-picker'
+
 export interface FlightData {
   id: string
   airlineCode: string
   flightNumber: string
   cabinClass: string
-  departureTime: string
-  arrivalTime: string
+  departureTime: Date
+  arrivalTime: Date
   origin: string
   destination: string
   averagePrice: Price
